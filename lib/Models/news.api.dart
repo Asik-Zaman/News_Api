@@ -5,7 +5,7 @@ import 'package:news_api/Models/news_model.dart';
 class NewsApi {
   static Future<List<NewsModel>> getNews() async {
     final response = await http.get(Uri.parse(
-        'https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=b8bb19f553514c5fb4ed8727df8749b7'));
+        'https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=use your own key'));
 
     Map data = jsonDecode(response.body);
     List _temp = [];
