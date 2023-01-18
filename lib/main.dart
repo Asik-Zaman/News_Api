@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_api/Pages/news_page.dart';
+import 'package:news_api/Pixels_API/pages/pixel_home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +10,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: NewsPage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: PhotoPage());
   }
 }

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:news_api/Models/news.api.dart';
-import 'package:news_api/Models/news_model.dart';
-import 'package:news_api/Pages/news_card_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:news_api/Pixels_API/Model/models.dart';
+import 'package:news_api/Pixels_API/Model/photo.api.dart';
+import 'package:news_api/Pixels_API/pages/photo_grid.dart';
 
-class NewsPage extends StatefulWidget {
-  const NewsPage({super.key});
+class PhotoPage extends StatefulWidget {
+  const PhotoPage({super.key});
 
   @override
-  State<NewsPage> createState() => _NewsPageState();
+  State<PhotoPage> createState() => _PhotoPageState();
 }
 
-class _NewsPageState extends State<NewsPage> {
-  List<NewsModel> _newsModel = [];
+class _PhotoPageState extends State<PhotoPage> {
+  List<PhotoModel> _photos = [];
   bool isLoading = true;
 
   @override
@@ -22,8 +22,9 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   Future<void> getData() async {
-    _newsModel = await NewsApi.getNews();
-    print(_newsModel.length);
+    _photos.clear();
+    _photos = await PhotoApi.getPhoto();
+    print(_photos.length);
     setState(() {
       isLoading = false;
     });
@@ -36,7 +37,7 @@ class _NewsPageState extends State<NewsPage> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: Text(
-              'News',
+              'Wallpaper',
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,
@@ -46,6 +47,23 @@ class _NewsPageState extends State<NewsPage> {
             elevation: 2.0,
           ),
           body: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    childAspectRatio: .6,
+                  ),
+                  itemCount: _photos.length,
+                  itemBuilder: ((context, index) {
+                    return PhotoGrid(
+                      imgUrl: _photos[index].imgUrl,
+                      photographer: _photos[index].photographer,
+                    );
+                  }))
+
+          /* body: isLoading
               ? Center(child: CircularProgressIndicator())
               : ListView.builder(
                   itemCount: _newsModel.length,
@@ -60,7 +78,8 @@ class _NewsPageState extends State<NewsPage> {
                         imgUrl: _newsModel[index].imgUrl,
                         linkUrl: _newsModel[index].linkUrl,
                         publishedTime: time);
-                  }))),
+                  })) */
+          ),
     );
   }
 }
